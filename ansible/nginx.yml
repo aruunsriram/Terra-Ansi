@@ -1,30 +1,13 @@
 ---
-- name: Deploy static HTML page with Nginx
+- name: Install htop
   hosts: all
-  become: true
-
-  vars:
-    html_src: "files/index.html"         # path to your local HTML file
-    html_dest: "/var/www/html/index.html"
-
+  become: yes
   tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
 
-    - name: Install Nginx
+    - name: Install htop
       apt:
-        name: nginx
+        name: htop
         state: present
-
-    - name: Copy HTML file to Nginx web root
-      copy:
-        src: "{{ html_src }}"
-        dest: "{{ html_dest }}"
-        mode: '0644'
-
-    - name: Ensure Nginx is started and enabled
-      service:
-        name: nginx
-        state: started
-        enabled: true
